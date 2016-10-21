@@ -11,5 +11,6 @@ namespace ReservationSystem.Service.Interface
     {
         void CreateReservationDetail(ReservationDetail reservationDetail);
         void SaveReservationDetail();
+        void CreateReservationDetail(IEnumerable<ReservationDetail> rdml);
     }
 }

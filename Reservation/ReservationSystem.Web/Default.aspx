@@ -1,43 +1,116 @@
 ﻿<%@ Page Title="Home Page" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="ReservationSystem.Web._Default" %>
 
-<asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
+<asp:Content ID="Content1" ContentPlaceHolderID="StyleSection" runat="server">
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentSection" runat="server">
+    <!-- Main component for a primary marketing message or call to action -->
+    <form id="form1" runat="server">
+        <div class="row">
+            <div class="col-md-4">
+            </div>
+            <div class="col-md-4">
+                Location
+        <br />
+                <asp:TextBox ID="Location" runat="server"></asp:TextBox>
+                <br />
+                <br />
+                Checkin
+        <br />
+                <asp:TextBox ID="Checkin" runat="server"></asp:TextBox>
+                <br />
+                <br />
+                Checkout
+        <br />
+                <asp:TextBox ID="Checkout" runat="server"></asp:TextBox>
+                <br />
+                <br />
+                Room
+        <br />
+                <asp:DropDownList ID="SelectRoomDropdown" runat="server">
+                    <asp:ListItem>1</asp:ListItem>
+                    <asp:ListItem>2</asp:ListItem>
+                    <asp:ListItem>3</asp:ListItem>
+                    <asp:ListItem>4</asp:ListItem>
+                    <asp:ListItem>5</asp:ListItem>
+                    <asp:ListItem>6</asp:ListItem>
+                    <asp:ListItem>7</asp:ListItem>
+                    <asp:ListItem>8</asp:ListItem>
+                    <asp:ListItem>9</asp:ListItem>
+                </asp:DropDownList>
+                <br />
+                <div id="reservation">
+                    <asp:Panel ID="SearchPanel" runat="server" Height="156px" Style="margin-bottom: 62px" Width="1178px">
+                        <br />
+                        Room Adult Children
+            <br />
+                        <br />
+                        <asp:DropDownList ID="Adult" runat="server">
+                            <asp:ListItem>1</asp:ListItem>
+                            <asp:ListItem>2</asp:ListItem>
+                            <asp:ListItem>3</asp:ListItem>
+                            <asp:ListItem>4</asp:ListItem>
+                            <asp:ListItem>5</asp:ListItem>
+                            <asp:ListItem>6</asp:ListItem>
+                            <asp:ListItem>7</asp:ListItem>
+                            <asp:ListItem>8</asp:ListItem>
+                            <asp:ListItem>9</asp:ListItem>
+                            <asp:ListItem>10</asp:ListItem>
+                        </asp:DropDownList>
 
-    <div class="jumbotron">
-        <h1>ASP.NET</h1>
-        <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS, and JavaScript.</p>
-        <p><a href="http://www.asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
-    </div>
+                        <asp:DropDownList ID="Children" runat="server">
+                            <asp:ListItem>1</asp:ListItem>
+                            <asp:ListItem>2</asp:ListItem>
+                            <asp:ListItem>3</asp:ListItem>
+                            <asp:ListItem>4</asp:ListItem>
+                            <asp:ListItem>5</asp:ListItem>
+                            <asp:ListItem>6</asp:ListItem>
+                            <asp:ListItem>7</asp:ListItem>
+                            <asp:ListItem>8</asp:ListItem>
+                            <asp:ListItem>9</asp:ListItem>
+                            <asp:ListItem>10</asp:ListItem>
+                        </asp:DropDownList>
+                        <br />
+                    </asp:Panel>
+                    <br />
+                </div>
+                <asp:Button ID="SubmitButton" runat="server" Text="Submit" OnClick="SubmitButton_Click" />
+                <p id="DataText" runat="server"></p>
+                <br />
 
-    <div class="row">
-        <div class="col-md-4">
-            <h2>Getting started<asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Button" Width="167px" />
-            </h2>
-            <p>
-                ASP.NET Web Forms lets you build dynamic websites using a familiar drag-and-drop, event-driven model.
-            A design surface and hundreds of controls and components let you rapidly build sophisticated, powerful UI-driven sites with data access.
-            </p>
-            <p>
-                <a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301948">Learn more &raquo;</a>
-            </p>
+
+            </div>
+            <div class="col-md-4">
+            </div>
         </div>
-        <div class="col-md-4">
-            <h2>Get more libraries</h2>
-            <p>
-                NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.
-            </p>
-            <p>
-                <a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301949">Learn more &raquo;</a>
-            </p>
-        </div>
-        <div class="col-md-4">
-            <h2>Web Hosting</h2>
-            <p>
-                You can easily find a web hosting company that offers the right mix of features and price for your applications.
-            </p>
-            <p>
-                <a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301950">Learn more &raquo;</a>
-            </p>
-        </div>
-    </div>
+    </form>
+</asp:Content>
+<asp:Content ID="Content3" ContentPlaceHolderID="ScriptSection" runat="server">
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+         
+                $('#SelectRoomDropdown').on('change', function() {
+                    var roomToBook = document.getElementById("SelectRoomDropdown").val();
+
+                var numberOfClonedClass = $(".clonedClass").length + 1;
+                if (numberOfClonedClass > roomToBook) {
+                    $(".clonedClass").each(function (index) {
+                        if (index + 2 > roomToBook) {
+                            $(this).remove();
+                        }
+                    });
+                    return false
+                };
+
+                for (var index = 0; index < roomToBook - numberOfClonedClass; index++) {
+                    $("#SearchPanel").clone().addClass("clonedClass").appendTo("#reservation");
+                }
+            });
+        });
+    </script>
 
 </asp:Content>
+
+
+

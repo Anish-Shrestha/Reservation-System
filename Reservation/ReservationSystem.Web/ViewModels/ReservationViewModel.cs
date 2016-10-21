@@ -21,5 +21,55 @@ namespace ReservationSystem.Web.ViewModels
         {
             DateCreated = DateTime.Now;
         }
+
+        public bool validate(out string message)
+        {
+            message = null;
+            if (Location == null || Location == "")
+            {
+                message = string.Format(ReservationResource.ErrorLocationNull);
+                return false;
+            }
+            else if (Location.Length > 100 || Location.All(char.IsDigit))
+            {
+                message = string.Format(ReservationResource.ErrorLocation, Location);
+                return false;
+            }
+            else if (CheckIn == new DateTime())
+            {
+
+                message = string.Format(ReservationResource.ErrorCheckInInput);
+                return false;
+            }
+            else if (CheckOut == new DateTime())
+            {
+                message = string.Format(ReservationResource.ErrorCheckOutInput);
+                return false;
+            }
+            else if (CheckIn > CheckOut)
+            {
+                message = string.Format(ReservationResource.ErrorCheckInCheckOut, CheckIn.ToString("yyyy/MM/dd"), CheckOut.ToString("yyyy/MM/dd"));
+                return false;
+            }
+            else if ((CheckIn - DateTime.Today).TotalDays < 1)
+            {
+                message = string.Format(ReservationResource.ErrorCheckInOld, CheckIn.ToString("yyyy/MM/dd"));
+                return false;
+            }
+            else if ((CheckOut - DateTime.Today).TotalDays < 1)
+            {
+                message = string.Format(ReservationResource.ErrorCheckOut, CheckIn.ToString("yyyy/MM/dd"));
+                return false;
+            }
+            else if (Rooms != ReservationDetailList.Count())
+            {
+                message = string.Format(ReservationResource.ErrorRoomNumber);
+                return false;
+            }
+
+            message = string.Empty;
+            return true;
+        }
+
     }
 }

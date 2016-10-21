@@ -21,10 +21,11 @@ namespace ReservationSystem.Service
             this._reservationRepository = reservationRepository;
         
         }
-        public void CreateReservation(Reservation reservation)
+        public int CreateReservation(Reservation reservation)
         {
             _reservationRepository.Add(reservation);
-           
+            SaveReservation();
+            return reservation.Id;
         
         }
 

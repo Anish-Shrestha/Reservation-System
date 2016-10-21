@@ -1,5 +1,6 @@
 ﻿
 using ReservationSystem.Data;
+using ReservationSystem.Web.Mappings;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,9 +21,10 @@ namespace ReservationSystem.Web
             // Code that runs on application startup
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+            AutoMapperConfiguration.Configure();
 
-          
-         
+
+
         }
     }
 }

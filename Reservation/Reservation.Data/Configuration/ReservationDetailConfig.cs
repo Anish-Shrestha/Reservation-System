@@ -15,6 +15,8 @@ namespace ReservationSystem.Data.Configuration
             ToTable("ReservationDetails");
             Property(c => c.ReservationId).IsRequired();
             Property(c => c.DateCreated).IsRequired();
+            Property(c => c.Adult).IsRequired();
+            Property(c => c.Children).IsRequired();
             
         }
     }

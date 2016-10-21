@@ -9,7 +9,7 @@ namespace ReservationSystem.Service.Interface
 {
     public interface IReservationService
     {
-        void CreateReservation(Reservation reservation);
+        int CreateReservation(Reservation reservation);
         void SaveReservation();
     }
 }
