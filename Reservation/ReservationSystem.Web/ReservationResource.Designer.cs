@@ -140,5 +140,23 @@ namespace ReservationSystem.Web {
                 return ResourceManager.GetString("ErrorRoomNumber", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unexpected error occured, please contact your system admin.
+        /// </summary>
+        internal static string FatalError {
+            get {
+                return ResourceManager.GetString("FatalError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reservation successful for location &apos;{0}&apos;.
+        /// </summary>
+        internal static string SuccessReservation {
+            get {
+                return ResourceManager.GetString("SuccessReservation", resourceCulture);
+            }
+        }
     }
 }

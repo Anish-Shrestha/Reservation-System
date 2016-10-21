@@ -24,7 +24,7 @@
                     </div>
                 </nav>
                    <div class="col-md-3"></div>
-                 <div class="col-md-6"><p id="DataText" class="validation" runat="server"></p></div>
+                 <div class="col-md-6">   <asp:Label ID="SuccessMessageLabel" class="success" runat="server" Text=""></asp:Label><p id="DataText" class="validation" runat="server"></p></div>
                  <div class="col-md-3"></div>
                    <div class="clearfix"></div>
                 <br />

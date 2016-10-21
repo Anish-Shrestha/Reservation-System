@@ -2,5 +2,8 @@
 }
 .validation {
     color: red;
-
+}
+.success {
+    color: green;
+    font-size: large;
 }

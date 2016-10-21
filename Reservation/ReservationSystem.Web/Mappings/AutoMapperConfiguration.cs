@@ -21,7 +21,10 @@ namespace ReservationSystem.Web.Mappings
                   .ForMember(dest => dest.CheckIn, opts => opts.MapFrom(src => src.Checkin))
                   .ForMember(dest => dest.CheckOut, opts => opts.MapFrom(src => src.Checkout))
                    .ForMember(dest => dest.Rooms, opts => opts.MapFrom(src => src.SelectRoomDropdown));
-                 
+                cfg.CreateMap<ReservationViewModel, Reservation>();
+                cfg.CreateMap<ReservationDetailViewModel, ReservationDetail>();
+
+
             });
           
         }

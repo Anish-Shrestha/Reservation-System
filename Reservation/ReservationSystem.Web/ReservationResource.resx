@@ -144,4 +144,10 @@
   <data name="ErrorRoomNumber" xml:space="preserve">
     <value>Please select number of room to reserve.</value>
   </data>
+  <data name="FatalError" xml:space="preserve">
+    <value>Unexpected error occured, please contact your system admin</value>
+  </data>
+  <data name="SuccessReservation" xml:space="preserve">
+    <value>Reservation successful for location '{0}'</value>
+  </data>
 </root>

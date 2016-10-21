@@ -11,11 +11,18 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Web.ModelBinding;
+using log4net;
 
 namespace ReservationSystem.Web
 {
     public partial class _Default : PageBase
     {
+
+        private ReservationViewModel rvm;
+        private List<ReservationDetailViewModel> rdvml;
+        private string successMessage;
+        private static readonly ILog log = LogManager.GetLogger("ReservationSystem");
+
         [Inject]
         public IReservationDetailService _reservationDetailService { get; set; }
 
@@ -24,60 +31,72 @@ namespace ReservationSystem.Web
 
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            if (!string.IsNullOrEmpty(successMessage)) {
+            
+                 successMessage = null;
+            }
         }
 
         protected void SubmitButton_Click(object sender, EventArgs e)
         {
-            var location = Location.Text;
-            var checkIn = Checkin.Text;
-            var checkout = Checkout.Text;
-            var room = SelectRoomDropdown.Text;
-            _binddataObject();
+            try
+            {
+                _binddataObject();
+                string errorMessage;
+                var checkModelrvm = rvm.validate(out errorMessage);
+                DataText.InnerText = errorMessage;
+                if (checkModelrvm)
+                {
+                    var insertedId = _reservationService.CreateReservation(AutoMapper.Mapper.Map<Reservation>(rvm));
+                    rvm.ReservationDetailList.ForEach(x => x.ReservationId = insertedId);
+                    rdvml = rvm.ReservationDetailList;
+                    _reservationDetailService.CreateReservationDetail(rdvml.Select(x => AutoMapper.Mapper.Map<ReservationDetail>(x)).ToList());
+                    successMessage = string.Format(ReservationResource.SuccessReservation, rvm.Location);
+                    Server.Transfer("/Default.aspx");
+                    
+
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+                DataText.InnerText = string.Format(ReservationResource.FatalError);
+            }
 
         }
 
         public void _binddataObject()
         {
-            SearchViewModel dataObject = new SearchViewModel();
-
-          
-
-            if (TryUpdateModel(dataObject, new FormValueProvider(ModelBindingExecutionContext)))
+            try
             {
-                DataText.InnerText = String.Format("Location: {0},    Checkin: {1},   Checkout: {2}, Adult:{3},Children:{4}",
-                  dataObject.Location, dataObject.Checkin, dataObject.Checkout, dataObject.Adult, dataObject.Children);
+                SearchViewModel dataObject = new SearchViewModel();
+                TryUpdateModel(dataObject, new FormValueProvider(ModelBindingExecutionContext));
+                rvm = AutoMapper.Mapper.Map<ReservationViewModel>(dataObject);
+                rdvml = bindDetailObject(dataObject);
+                rvm.ReservationDetailList = rdvml;
             }
-       
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
         }
 
-        // not in use
-        public void addReservationForm_InsertItem()
+        public List<ReservationDetailViewModel> bindDetailObject(SearchViewModel dataObject)
         {
-            var item = new ReservationViewModel();
-
-            TryUpdateModel(item);
-            if (ModelState.IsValid)
+            try
             {
-               
+                List<ReservationDetailViewModel> lst = new List<ReservationDetailViewModel>();
+                for (int i = 0; i < dataObject.Adult.Count(); i++)
+                {
+                    lst.Add(new ReservationDetailViewModel(dataObject.Adult[i], dataObject.Children[i]));
+                }
+                return lst;
             }
-        }
-
-     
-        // for test
-        protected void Button1_Click(object sender, EventArgs e)
-        {
-            var reserve = new ReservationDetail();
-           
-              reserve.Adult = 2233;
-            reserve.Children = 3223;
-            reserve.DateUpdated = DateTime.Now;
-            reserve.DateCreated = DateTime.Now;
-            reserve.Id = 223;
-
-          
-            _reservationDetailService.CreateReservationDetail(reserve);
-            _reservationDetailService.SaveReservationDetail();
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
     }
 }

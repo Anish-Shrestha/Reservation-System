@@ -1,4 +1,5 @@
-﻿using Ninject;
+﻿using log4net;
+using Ninject;
 using ReservationSystem.Model.Models;
 using ReservationSystem.Service.Interface;
 using ReservationSystem.Web.Mappings;
@@ -17,6 +18,7 @@ namespace ReservationSystem.Web
     {
         private ReservationViewModel rvm;
         private List<ReservationDetailViewModel> rdvml;
+        private static readonly ILog log = LogManager.GetLogger("ReservationSystem");
 
         [Inject]
         public IReservationDetailService _reservationDetailService { get; set; }
@@ -31,69 +33,63 @@ namespace ReservationSystem.Web
 
         protected void SubmitButton_Click(object sender, EventArgs e)
         {
-            _binddataObject();
-            string errorMessage;
-            var checkModelrvm = rvm.validate(out errorMessage);
-            DataText.InnerText = errorMessage;
-            if (checkModelrvm)
+            try
             {
-                AutoMapper.Mapper.Initialize(cfg => cfg.CreateMap<ReservationViewModel, Reservation>());
-                var insertedId = _reservationService.CreateReservation(AutoMapper.Mapper.Map<Reservation>(rvm));
+                SuccessMessageLabel.Text = string.Empty;
+                _binddataObject();
+                string errorMessage;
+                var checkModelrvm = rvm.validate(out errorMessage);
+                DataText.InnerText = errorMessage;
+                if (checkModelrvm)
+                {
+                    var insertedId = _reservationService.CreateReservation(AutoMapper.Mapper.Map<Reservation>(rvm));
+                    rvm.ReservationDetailList.ForEach(x => x.ReservationId = insertedId);
+                    rdvml = rvm.ReservationDetailList;
+                    _reservationDetailService.CreateReservationDetail(rdvml.Select(x => AutoMapper.Mapper.Map<ReservationDetail>(x)).ToList());
+                    SuccessMessageLabel.Text = string.Format(ReservationResource.SuccessReservation, rvm.Location);
 
-                rvm.ReservationDetailList.ForEach(x => x.ReservationId = insertedId);
-                rdvml = rvm.ReservationDetailList;
-
-                AutoMapper.Mapper.Initialize(cfg => cfg.CreateMap<ReservationDetailViewModel, ReservationDetail>());
-                _reservationDetailService.CreateReservationDetail(rdvml.Select(x => AutoMapper.Mapper.Map<ReservationDetail>(x)).ToList());
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+                DataText.InnerText = string.Format(ReservationResource.FatalError);
             }
 
         }
 
         public void _binddataObject()
         {
-            SearchViewModel dataObject = new SearchViewModel();
-            TryUpdateModel(dataObject, new FormValueProvider(ModelBindingExecutionContext));
-            AutoMapperConfiguration.Configure();
-            rvm = AutoMapper.Mapper.Map<ReservationViewModel>(dataObject);
-            rdvml = bindDetailObject(dataObject);
-            rvm.ReservationDetailList = rdvml;
+            try
+            {
+                SearchViewModel dataObject = new SearchViewModel();
+                TryUpdateModel(dataObject, new FormValueProvider(ModelBindingExecutionContext));
+                rvm = AutoMapper.Mapper.Map<ReservationViewModel>(dataObject);
+                rdvml = bindDetailObject(dataObject);
+                rvm.ReservationDetailList = rdvml;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
 
         }
 
         public List<ReservationDetailViewModel> bindDetailObject(SearchViewModel dataObject)
         {
-            List<ReservationDetailViewModel> lst = new List<ReservationDetailViewModel>();
-            for (int i = 0; i < dataObject.Adult.Count(); i++)
+            try
             {
-                lst.Add(new ReservationDetailViewModel(dataObject.Adult[i], dataObject.Children[i]));
+                List<ReservationDetailViewModel> lst = new List<ReservationDetailViewModel>();
+                for (int i = 0; i < dataObject.Adult.Count(); i++)
+                {
+                    lst.Add(new ReservationDetailViewModel(dataObject.Adult[i], dataObject.Children[i]));
+                }
+                return lst;
             }
-            return lst;
-        }
-        // not in use
-        public void addReservationForm_InsertItem()
-        {
-            var item = new ReservationViewModel();
-
-            TryUpdateModel(item);
-            if (ModelState.IsValid)
+            catch (Exception ex)
             {
-
+                throw ex;
             }
-        }
-
-
-        // for test
-        protected void Button1_Click(object sender, EventArgs e)
-        {
-            var reserve = new ReservationDetail();
-
-            reserve.Adult = 2233;
-            reserve.Children = 3223;
-            reserve.DateUpdated = DateTime.Now;
-            reserve.DateCreated = DateTime.Now;
-            reserve.Id = 223;
-
-
         }
     }
 }
