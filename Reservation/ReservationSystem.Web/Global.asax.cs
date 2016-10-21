@@ -32,12 +32,10 @@ namespace ReservationSystem.Web
 
         }
 
-        protected void Application_Error(object sender, EventArgs e) {
-
+        protected void Application_Error(object sender, EventArgs e)
+        {
             Exception ex = Server.GetLastError();
-            log.Debug("____________________________________");
             log.Error(ex);
-            log.Debug("____________________________________");
         }
     }
 }

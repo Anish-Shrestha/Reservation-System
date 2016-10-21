@@ -4,12 +4,12 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-    <title></title>
-    <script src="Scripts/jquery-1.10.2.js" type="text/javascript"></script>
-    <script src="Scripts/ReservationScripts/search.js"></script>
-    <script src="Scripts/bootstrap.js"></script>
-    <link href="Content/bootstrap.css" rel="stylesheet" />
-    <link href="Content/reservation.css" rel="stylesheet" />
+    <title>Reservation</title>
+    <%: Styles.Render("~/bundles/searchPageStyle") %>
+
+         <%: Scripts.Render("~/bundles/JQuery") %>
+         <%: Scripts.Render("~/bundles/BootStrapJs") %>
+         <%: Scripts.Render("~/bundles/searchPage") %>
 </head>
 <body>
     <form id="form" runat="server">
@@ -24,7 +24,7 @@
                     </div>
                 </nav>
                    <div class="col-md-3"></div>
-                 <div class="col-md-6">   <asp:Label ID="SuccessMessageLabel" class="success" runat="server" Text=""></asp:Label><p id="DataText" class="validation" runat="server"></p></div>
+                 <div class="col-md-6">   <asp:Label ID="SuccessMessageLabl" class="success" runat="server" Text=""></asp:Label><p id="DataText" class="validation" runat="server"></p></div>
                  <div class="col-md-3"></div>
                    <div class="clearfix"></div>
                 <br />
@@ -140,7 +140,7 @@
                     <asp:Button ID="SubmitButton" CssClass="btn btn-primary" runat="server" Text="Submit" OnClick="SubmitButton_Click" />
                 </div>
                 <div class="col-md-2"></div>
-             <%--   <p id="DataText" runat="server"></p>--%>
+      
                 <br />
                 <br />
                 <br />

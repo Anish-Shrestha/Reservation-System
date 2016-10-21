@@ -2,14 +2,11 @@
 using Ninject;
 using ReservationSystem.Model.Models;
 using ReservationSystem.Service.Interface;
-using ReservationSystem.Web.Mappings;
 using ReservationSystem.Web.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.ModelBinding;
-using System.Web.UI;
 using System.Web.UI.WebControls;
 
 namespace ReservationSystem.Web
@@ -18,6 +15,7 @@ namespace ReservationSystem.Web
     {
         private ReservationViewModel rvm;
         private List<ReservationDetailViewModel> rdvml;
+        public static string successMessage;
         private static readonly ILog log = LogManager.GetLogger("ReservationSystem");
 
         [Inject]
@@ -28,14 +26,21 @@ namespace ReservationSystem.Web
 
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            if (!string.IsNullOrEmpty(successMessage) && SuccessMessageLabl != null)
+            {
+                SuccessMessageLabl.Text = successMessage;
+                successMessage = null;
+            }
+            else {
+                SuccessMessageLabl.Text = string.Empty;
+            }
         }
 
         protected void SubmitButton_Click(object sender, EventArgs e)
         {
             try
             {
-                SuccessMessageLabel.Text = string.Empty;
+                SuccessMessageLabl.Text = string.Empty;
                 _binddataObject();
                 string errorMessage;
                 var checkModelrvm = rvm.validate(out errorMessage);
@@ -46,8 +51,9 @@ namespace ReservationSystem.Web
                     rvm.ReservationDetailList.ForEach(x => x.ReservationId = insertedId);
                     rdvml = rvm.ReservationDetailList;
                     _reservationDetailService.CreateReservationDetail(rdvml.Select(x => AutoMapper.Mapper.Map<ReservationDetail>(x)).ToList());
-                    SuccessMessageLabel.Text = string.Format(ReservationResource.SuccessReservation, rvm.Location);
-
+                    successMessage = string.Format(ReservationResource.SuccessReservation, rvm.Location);
+                    Response.Redirect("Search.aspx",false);
+                 
                 }
             }
             catch (Exception ex)

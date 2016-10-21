@@ -151,7 +151,7 @@ namespace ReservationSystem.Web {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Reservation successful for location &apos;{0}&apos;.
+        ///   Looks up a localized string similar to Reservation successful in location &apos;{0}&apos;.
         /// </summary>
         internal static string SuccessReservation {
             get {

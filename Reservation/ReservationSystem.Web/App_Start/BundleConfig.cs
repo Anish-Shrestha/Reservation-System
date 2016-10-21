@@ -21,7 +21,18 @@ namespace ReservationSystem.Web
                             "~/Scripts/WebForms/DetailsView.js",
                             "~/Scripts/WebForms/TreeView.js",
                             "~/Scripts/WebForms/WebParts.js"));
+            //Bootstrap
+            bundles.Add(new ScriptBundle("~/bundles/BootStrapJs").Include("~/Scripts/bootstrap.js"));
+            //jQuery
+            bundles.Add(new ScriptBundle("~/bundles/JQuery").Include("~/Scripts/jquery-1.10.2.js"));
+            //jQuery
+            bundles.Add(new ScriptBundle("~/bundles/searchPage").Include("~/Scripts/ReservationScripts/search.js"));
 
+            bundles.Add(new Bundle("~/bundles/searchPageStyle").Include(
+     "~/Content/reservation.css",
+     "~/Content/bootstrap.css"
+     ));
+            BundleTable.EnableOptimizations = true;
             // Order is very important for these files to work, they have explicit dependencies
             bundles.Add(new ScriptBundle("~/bundles/MsAjaxJs").Include(
                     "~/Scripts/WebForms/MsAjax/MicrosoftAjax.js",

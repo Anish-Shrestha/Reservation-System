@@ -148,6 +148,6 @@
     <value>Unexpected error occured, please contact your system admin</value>
   </data>
   <data name="SuccessReservation" xml:space="preserve">
-    <value>Reservation successful for location '{0}'</value>
+    <value>Reservation successful in location '{0}'</value>
   </data>
 </root>
