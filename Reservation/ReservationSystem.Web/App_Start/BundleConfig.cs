@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Optimization;
+﻿using System.Web.Optimization;
 using System.Web.UI;
 
 namespace ReservationSystem.Web
@@ -21,12 +17,15 @@ namespace ReservationSystem.Web
                             "~/Scripts/WebForms/DetailsView.js",
                             "~/Scripts/WebForms/TreeView.js",
                             "~/Scripts/WebForms/WebParts.js"));
+            //typehead
+            bundles.Add(new ScriptBundle("~/bundles/typehead").Include("~/Scripts/typeahead.bundle.min.js"));
             //Bootstrap
             bundles.Add(new ScriptBundle("~/bundles/BootStrapJs").Include("~/Scripts/bootstrap.js"));
             //jQuery
             bundles.Add(new ScriptBundle("~/bundles/JQuery").Include("~/Scripts/jquery-1.10.2.js"));
             //datePicker
             bundles.Add(new ScriptBundle("~/bundles/datepicker").Include("~/Scripts/bootstrap-datepicker.js"));
+
             bundles.Add(new ScriptBundle("~/bundles/searchPage").Include("~/Scripts/ReservationScripts/search.js"));
 
             bundles.Add(new Bundle("~/bundles/searchPageStyle").Include(

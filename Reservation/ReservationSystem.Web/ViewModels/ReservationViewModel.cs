@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-
 namespace ReservationSystem.Web.ViewModels
 {
     public class ReservationViewModel
@@ -50,17 +48,17 @@ namespace ReservationSystem.Web.ViewModels
                 }
                 else if (CheckIn > CheckOut)
                 {
-                    message = string.Format(ReservationResource.ErrorCheckInCheckOut, CheckIn.ToString("yyyy/MM/dd"), CheckOut.ToString("yyyy/MM/dd"));
+                    message = string.Format(ReservationResource.ErrorCheckInCheckOut, CheckIn.ToString("MM/dd/yyyy"), CheckOut.ToString("MM/dd/yyyy"));
                     return false;
                 }
                 else if ((CheckIn - DateTime.Today).TotalDays < 0)
                 {
-                    message = string.Format(ReservationResource.ErrorCheckInOld, CheckIn.ToString("yyyy/MM/dd"));
+                    message = string.Format(ReservationResource.ErrorCheckInOld, CheckIn.ToString("MM/dd/yyyy"));
                     return false;
                 }
                 else if ((CheckOut - DateTime.Today).TotalDays < 0)
                 {
-                    message = string.Format(ReservationResource.ErrorCheckOut, CheckIn.ToString("yyyy/MM/dd"));
+                    message = string.Format(ReservationResource.ErrorCheckOut, CheckIn.ToString("MM/dd/yyyy"));
                     return false;
                 }
                 else if (Rooms != ReservationDetailList.Count())
