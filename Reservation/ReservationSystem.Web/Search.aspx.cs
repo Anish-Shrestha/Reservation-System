@@ -84,10 +84,12 @@ namespace ReservationSystem.Web
         public List<ReservationDetailViewModel> bindDetailObject(SearchViewModel dataObject)
         {
             try
-            {
-                List<ReservationDetailViewModel> lst = new List<ReservationDetailViewModel>();
+            {               
+             List <ReservationDetailViewModel> lst = new List<ReservationDetailViewModel>();
                 for (int i = 0; i < dataObject.Adult.Count(); i++)
                 {
+                    adultList.Text += dataObject.Adult[i] + ",";
+                    childrenList.Text += dataObject.Children[i] + ",";
                     lst.Add(new ReservationDetailViewModel(dataObject.Adult[i], dataObject.Children[i]));
                 }
                 return lst;

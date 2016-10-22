@@ -53,12 +53,12 @@ namespace ReservationSystem.Web.ViewModels
                     message = string.Format(ReservationResource.ErrorCheckInCheckOut, CheckIn.ToString("yyyy/MM/dd"), CheckOut.ToString("yyyy/MM/dd"));
                     return false;
                 }
-                else if ((CheckIn - DateTime.Today).TotalDays < 1)
+                else if ((CheckIn - DateTime.Today).TotalDays < 0)
                 {
                     message = string.Format(ReservationResource.ErrorCheckInOld, CheckIn.ToString("yyyy/MM/dd"));
                     return false;
                 }
-                else if ((CheckOut - DateTime.Today).TotalDays < 1)
+                else if ((CheckOut - DateTime.Today).TotalDays < 0)
                 {
                     message = string.Format(ReservationResource.ErrorCheckOut, CheckIn.ToString("yyyy/MM/dd"));
                     return false;

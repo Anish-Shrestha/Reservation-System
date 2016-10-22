@@ -6,10 +6,15 @@
 <head runat="server">
     <title>Reservation</title>
     <%: Styles.Render("~/bundles/searchPageStyle") %>
-
+    
          <%: Scripts.Render("~/bundles/JQuery") %>
          <%: Scripts.Render("~/bundles/BootStrapJs") %>
+         <%: Scripts.Render("~/bundles/datepicker") %>
          <%: Scripts.Render("~/bundles/searchPage") %>
+    <script>
+
+      
+    </script>
 </head>
 <body>
     <form id="form" runat="server">
@@ -44,7 +49,7 @@
                     <div class="col-md-6">
                         <div class="input-group">
                             <span class="input-group-addon" id="sizing-addon3">Checkin</span>
-                            <asp:TextBox ID="Checkin" class="form-control" aria-describedby="sizing-addon3" runat="server"></asp:TextBox>
+                            <asp:TextBox ID="Checkin" autocomplete="off" class="form-control" aria-describedby="sizing-addon3" runat="server"></asp:TextBox>
                         </div>
                     </div>
                     <div class="col-md-6"></div>
@@ -53,7 +58,7 @@
                     <div class="col-md-6">
                         <div class="input-group">
                             <span class="input-group-addon" id="sizing-addon4">Checkout</span>
-                            <asp:TextBox ID="Checkout" class="form-control" aria-describedby="sizing-addon4" runat="server"></asp:TextBox>
+                            <asp:TextBox ID="Checkout" autocomplete="off" class="form-control" aria-describedby="sizing-addon4" runat="server"></asp:TextBox>
                         </div>
                     </div>
                     <div class="col-md-6"></div>
@@ -89,7 +94,7 @@
                         <div class="col-md-7 well well-sm">
 
                             <div class="col-md-4">
-                                <label class="form-control">Room 10</label>
+                                <label class="form-control" id="RoomId">Room 1</label>
                             </div>
                             <div class="col-md-4">
                                 <div class="input-group">
@@ -140,8 +145,10 @@
                     <asp:Button ID="SubmitButton" CssClass="btn btn-primary" runat="server" Text="Submit" OnClick="SubmitButton_Click" />
                 </div>
                 <div class="col-md-2"></div>
-      
-                <br />
+ 
+                <asp:TextBox ID="adultList"  runat="server"></asp:TextBox>  
+                <asp:TextBox ID="childrenList"  runat="server"></asp:TextBox>
+                 <br />
                 <br />
                 <br />
 
