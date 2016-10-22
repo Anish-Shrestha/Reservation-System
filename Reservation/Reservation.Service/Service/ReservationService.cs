@@ -1,11 +1,5 @@
 ﻿using ReservationSystem.Service.Interface;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using ReservationSystem.Model.Models;
-using ReservationSystem.Data.Infrastructure;
 using ReservationSystem.Data.Repositories.IRepositories;
 
 namespace ReservationSystem.Service

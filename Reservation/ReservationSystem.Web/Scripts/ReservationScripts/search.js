@@ -18,8 +18,15 @@ $(document).ready(function () {
                 var panel = $("#SearchPanel").clone().addClass("clonedClass");
                 panel.find("#Adult").val(adultList[li]);
                 panel.find("#Children").val(childrenList[li]);
-                panel.find("#RoomId").text("Room " + parseInt(li+1));
+                var roomCount = parseInt(li)+1;
+                panel.find("#RoomId").text("Room " + roomCount);
                 panel.appendTo("#reservation");
+            }
+            else if (li == 0) {
+                var roomCount = parseInt(li) + 1;
+                $("#SearchPanel").find("#RoomId").text("Room " + roomCount);
+                $("#SearchPanel").find("#Adult").val(adultList[li]);
+                $("#SearchPanel").find("#Children").val(childrenList[li]);
             }
         }
         document.getElementById("adultList").value = "";

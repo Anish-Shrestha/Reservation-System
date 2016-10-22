@@ -107,7 +107,9 @@
                     <asp:Button ID="SubmitButton" CssClass="btn btn-primary" runat="server" Text="Submit" OnClick="SubmitButton_Click" />
                 </div>
                 <div class="col-md-2"></div>
-
+                <div class="clearfix"></div>
+                <br />
+                <br />
                 <asp:TextBox ID="adultList" runat="server"></asp:TextBox>
                 <asp:TextBox ID="childrenList" runat="server"></asp:TextBox>
                 <br />

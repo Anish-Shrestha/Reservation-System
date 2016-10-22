@@ -45,7 +45,7 @@ namespace ReservationSystem.Web
                 log.Error(ex.Message);
             }
         }
-        
+
         /// <summary>
         ///  Method to create reservation and reservation detail.
         /// </summary>
@@ -75,12 +75,8 @@ namespace ReservationSystem.Web
                 {
                     DataText.InnerText = errorMessage;  // Display error message
 
-                    // Retain Check-in and Check-out date information after post back
-                    var newDate = new DateTime();
-                    if (rvm.CheckIn != newDate)
-                        Checkin.Text = rvm.CheckIn.ToString("MM/dd/yyyy");
-                    if (rvm.CheckOut != newDate)
-                        Checkout.Text = rvm.CheckOut.ToString("MM/dd/yyyy");
+                    // Retain form information after post back
+                    formDataMaintain();
                 }
             }
             catch (Exception ex)
@@ -90,8 +86,30 @@ namespace ReservationSystem.Web
             }
 
         }
-        
+
         #region Private Methods 
+
+        /// <summary>
+        /// Retain form information after post back
+        /// </summary>
+        private void formDataMaintain()
+        {
+            try
+            {
+                var newDate = new DateTime();
+                if (rvm.CheckIn != newDate)
+                    Checkin.Text = rvm.CheckIn.ToString("MM/dd/yyyy");
+                if (rvm.CheckOut != newDate)
+                    Checkout.Text = rvm.CheckOut.ToString("MM/dd/yyyy");
+                SelectRoomDropdown.SelectedValue = rvm.Rooms.ToString();
+               
+                SelectRoomDropdown.Items.FindByValue(rvm.Rooms.ToString()).Selected = true;
+                //Adult.Items.FindByValue(rvm.ReservationDetailList.First().Adult.ToString()).Selected = true;
+                //Children.Items.FindByValue(rvm.ReservationDetailList.First().Children.ToString()).Selected = true;
+                Location.Text = rvm.Location;
+            }
+            catch { throw; }
+        }
 
         /// <summary>
         /// Bind data object to ViewModel
@@ -114,7 +132,7 @@ namespace ReservationSystem.Web
                 throw ex;
             }
         }
-        
+
         /// <summary>
         /// Bind data object to ViewModel
         /// </summary>
@@ -134,7 +152,7 @@ namespace ReservationSystem.Web
             }
 
         }
-        
+
         /// <summary>
         /// Vaue of dropdown list present in Search.aspx is bind using this method.
         /// </summary>
@@ -158,7 +176,7 @@ namespace ReservationSystem.Web
                 throw;
             }
         }
-       
+
         #endregion
 
     }
