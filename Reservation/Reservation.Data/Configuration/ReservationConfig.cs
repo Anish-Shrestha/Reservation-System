@@ -10,7 +10,7 @@ namespace ReservationSystem.Data.Configuration
             ToTable("Reservations");
             Property(c => c.CheckIn).IsRequired();
             Property(c => c.CheckOut).IsRequired();
-            Property(c => c.Location).IsRequired();
+            Property(c => c.Location).IsRequired().HasMaxLength(100); 
             Property(c => c.DateCreated).IsRequired();
         }
     }

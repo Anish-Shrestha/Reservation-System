@@ -10,20 +10,20 @@ $(document).ready(function () {
     $("#childrenList").hide();
     var roomsAdultList = document.getElementById("adultList").value;
     var roomsChildrenList = document.getElementById("childrenList").value;
-    if (roomsAdultList != "") {
+    if (!isEmpty(roomsAdultList)) {
         var adultList = roomsAdultList.slice(0, -1).split(",");
         var childrenList = roomsChildrenList.slice(0, -1).split(",");
         for (var li in adultList) {
+            var roomCount = parseInt(li) + 1;
             if (li > 0) {
                 var panel = $("#SearchPanel").clone().addClass("clonedClass");
                 panel.find("#Adult").val(adultList[li]);
                 panel.find("#Children").val(childrenList[li]);
-                var roomCount = parseInt(li)+1;
                 panel.find("#RoomId").text("Room " + roomCount);
                 panel.appendTo("#reservation");
             }
             else if (li == 0) {
-                var roomCount = parseInt(li) + 1;
+
                 $("#SearchPanel").find("#RoomId").text("Room " + roomCount);
                 $("#SearchPanel").find("#Adult").val(adultList[li]);
                 $("#SearchPanel").find("#Children").val(childrenList[li]);
@@ -54,7 +54,7 @@ $(document).ready(function () {
             var panel = $("#SearchPanel").clone().addClass("clonedClass");
             panel.find("#Adult").val(1);
             panel.find("#Children").val(1);
-            panel.find("#RoomId").text("Room "+parseInt(index+numberOfClonedClass+1))
+            panel.find("#RoomId").text("Room " + parseInt(index + numberOfClonedClass + 1))
             panel.appendTo("#reservation");
         }
     });
@@ -75,7 +75,7 @@ $(document).ready(function () {
     $('#Checkout').datepicker().on('changeDate', function (ev) {
         $('#Checkout').datepicker('hide');
     });
-    
+
     /*
         Below code is for autocomplete location. It uses typeheadJs
     */
@@ -103,6 +103,15 @@ $(document).ready(function () {
         displayKey: 'value',
         source: cities.ttAdapter()
     });
+
+
+
+    // Helper Methods
+
+
+    function isEmpty(value) {
+        return typeof value == 'string' && !value.trim() || typeof value == 'undefined' || value === null;
+    }
 
 
 

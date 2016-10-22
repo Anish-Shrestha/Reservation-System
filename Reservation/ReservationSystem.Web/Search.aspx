@@ -110,8 +110,8 @@
                 <div class="clearfix"></div>
                 <br />
                 <br />
-                <asp:TextBox ID="adultList" runat="server"></asp:TextBox>
-                <asp:TextBox ID="childrenList" runat="server"></asp:TextBox>
+                <asp:TextBox ID="adultList" style="display:none" runat="server"></asp:TextBox>
+                <asp:TextBox ID="childrenList" style="display:none" runat="server"></asp:TextBox>
                 <br />
                 <br />
             </div>
