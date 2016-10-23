@@ -1,13 +1,111 @@
-﻿
+﻿// display loading while ajax request
+$(document).ajaxStart(function () {
+    $('#loading').show();
+}).ajaxStop(function () {
+    $('#loading').hide();
+});
+
 $(document).ready(function () {
+
+    $('#loading').hide(); // hide loading at first.
+
+    // Client side validation
+    var $formvalidator = $("#form").validate({
+        rules: {
+            "Location": {
+                required: true,
+                minlength: 1,
+                citiesAPI: true, // custom function to validate location selected from api
+                maxlength: 100
+            },
+            "Checkin": {
+                required: true,
+                date: true,
+                dateGTtoday: true // custom function to validate date greater than today
+            },
+            "Checkout": {
+                required: true,
+                date: true,
+                dateGTtoday: true,
+                checkinFirst: true // custom function to validate check-in date must be less than check-out date
+            }
+        },
+        messages: {
+            "Location": {
+                required: "* Location field is required.",
+                minlength: "* Location is not valid.",
+                maxlength: "* Location is not valid.",
+
+            },
+            "Checkin": {
+                required: "* Checkin Date field required.",
+                dateGTtoday: "* Checkin date should not be less than today's date"
+
+            },
+            "Checkout": {
+                required: "* Checkout Date field required.",
+                dateGTtoday: "* Checkout date should not be less than today's date"
+            }
+
+
+        },
+        errorElement: 'p',
+        errorLabelContainer: '.validation'
+    });
+
+    // custom function to validate check-in date must be less than check-out date
+    jQuery.validator.addMethod("checkinFirst", function (value, element) {
+        var checkin = new Date($("#Checkin").val());
+        var checkout = new Date($("#Checkout").val())
+        if (checkin > checkout) {
+            return false;
+        }
+        return true;
+    }, "* Check-in date must be less than Check-out date");
+
+    // custom function to validate date greater than today
+    jQuery.validator.addMethod("dateGTtoday", function (value, element) {
+        var dateNow = new Date();
+        if (new Date(value) < new Date(dateNow.getMonth() + "/" + dateNow.getDate() + "/" + dateNow.getFullYear())) {
+            return false;
+        }
+        return true;
+    }, "* Please select date greater than today");
+
+    // custom function to validate location selected from api
+    jQuery.validator.addMethod("citiesAPI", function (value, element) {
+        var isSuccess = false;
+        $('#loading').show();
+        $.ajax({
+            url: "https://api.teleport.org/api/cities/?search=" + value,
+            async: false,
+            type: 'GET',
+            success:
+                function (cities) {
+                    var objectList = cities._embedded["city:search-results"];
+                    if (jQuery.isEmptyObject(objectList)) return false;
+                    var cities = $.map(objectList, function (city) {
+                        if (city.matching_alternate_names[0])
+                            return {
+                                value: city.matching_alternate_names[0].name
+                            };
+                    });
+                    if (cities == 'undefined' || cities == null) return false;
+                    if (cities[0].value == value) {
+                        isSuccess = true;
+                    }
+                    $('#loading').hide();
+                }
+        });
+        return isSuccess;
+    }, "* Please select location suggested");
 
     /*
         Below code is to maintain the value of the form, if there
         is validation error in server side, we need to maintain value
         of form element.
     */
-    $("#adultList").hide();
-    $("#childrenList").hide();
+
     var roomsAdultList = document.getElementById("adultList").value;
     var roomsChildrenList = document.getElementById("childrenList").value;
     if (!isEmpty(roomsAdultList)) {
@@ -63,10 +161,7 @@ $(document).ready(function () {
         Below code is for datepicker in Check-in and Check-out and its validation.
         It uses bootstrap datepicker.
     */
-    var todayTimeStamp = +new Date;
-    var TimeStamp = 1000 * 60 * 60 * 24 * 2;
-    var diff = todayTimeStamp - TimeStamp;
-    var yesterday = new Date(diff);
+    var yesterday = new Date(new Date().setDate(new Date().getDate() - 2));
     $('#Checkin').datepicker('setStartDate', yesterday);
     $('#Checkin').datepicker().on('changeDate', function (ev) {
         $('#Checkin').datepicker('hide');
@@ -89,9 +184,10 @@ $(document).ready(function () {
             filter: function (cities) {
                 var objectList = cities._embedded["city:search-results"];
                 return $.map(objectList, function (city) {
-                    return {
-                        value: city.matching_full_name
-                    };
+                    if (city.matching_alternate_names[0])
+                        return {
+                            value: city.matching_alternate_names[0].name
+                        };
                 });
             }
         }
@@ -107,8 +203,6 @@ $(document).ready(function () {
 
 
     // Helper Methods
-
-
     function isEmpty(value) {
         return typeof value == 'string' && !value.trim() || typeof value == 'undefined' || value === null;
     }

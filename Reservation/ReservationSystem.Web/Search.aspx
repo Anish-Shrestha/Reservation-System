@@ -5,11 +5,11 @@
 <head runat="server">
     <title>Reservation System</title>
     <%: Styles.Render("~/bundles/searchPageStyle") %>
-
     <%: Scripts.Render("~/bundles/JQuery") %>
     <%: Scripts.Render("~/bundles/BootStrapJs") %>
     <%: Scripts.Render("~/bundles/datepicker") %>
     <%: Scripts.Render("~/bundles/typehead") %>
+    <%: Scripts.Render("~/bundles/JQueryValidate") %>
     <%: Scripts.Render("~/bundles/searchPage") %>
 </head>
 <body>
@@ -22,11 +22,16 @@
                         <div class="navbar-header">
                             <p class="navbar-text"><strong>Search Site</strong></p>
                         </div>
+
                     </div>
                 </nav>
                 <div class="col-md-3"></div>
                 <div class="col-md-6">
-                    <asp:Label ID="SuccessMessageLabl" class="success" runat="server" Text=""></asp:Label><p id="DataText" class="validation" runat="server"></p>
+                    <asp:Label ID="SuccessMessageLabl" class="success" runat="server" Text=""></asp:Label>
+                    <br />
+                    <div class="clearfix"></div>
+                    <br />
+                    <p id="DataText" class="validation" runat="server"></p>
                 </div>
                 <div class="col-md-3"></div>
                 <div class="clearfix"></div>
@@ -41,7 +46,15 @@
                             <asp:TextBox ID="Location" class="form-control typeahead" aria-describedby="sizing-addon2" runat="server"></asp:TextBox>
                         </div>
                     </div>
-                    <div class="col-md-6"></div>
+                    <div class="col-md-6">
+                        <div id="loading">
+                            <p>
+                                <img class="loadingImage" src="Content/Image/ajax-loader.gif" />
+                                Loading...
+                            </p>
+
+                        </div>
+                    </div>
                     <div class="clearfix"></div>
                     <br />
                     <div class="col-md-6">
@@ -59,7 +72,9 @@
                             <asp:TextBox ID="Checkout" autocomplete="off" ReadOnly="true" class="form-control" aria-describedby="sizing-addon4" runat="server"></asp:TextBox>
                         </div>
                     </div>
-                    <div class="col-md-6"></div>
+                    <div class="col-md-6">
+                        <div class="col-xs-5 messageContainer"></div>
+                    </div>
                     <div class="clearfix"></div>
                     <br />
                     <div class="col-md-6">
@@ -110,8 +125,8 @@
                 <div class="clearfix"></div>
                 <br />
                 <br />
-                <asp:TextBox ID="adultList" style="display:none" runat="server"></asp:TextBox>
-                <asp:TextBox ID="childrenList" style="display:none" runat="server"></asp:TextBox>
+                <asp:TextBox ID="adultList" Style="display: none" runat="server"></asp:TextBox>
+                <asp:TextBox ID="childrenList" Style="display: none" runat="server"></asp:TextBox>
                 <br />
                 <br />
             </div>

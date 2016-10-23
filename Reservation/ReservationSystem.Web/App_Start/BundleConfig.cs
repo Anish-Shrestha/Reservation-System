@@ -23,16 +23,18 @@ namespace ReservationSystem.Web
             bundles.Add(new ScriptBundle("~/bundles/BootStrapJs").Include("~/Scripts/bootstrap.js"));
             //jQuery
             bundles.Add(new ScriptBundle("~/bundles/JQuery").Include("~/Scripts/jquery-1.10.2.js"));
+            //jQueryValidate
+            bundles.Add(new ScriptBundle("~/bundles/JQueryValidate").Include("~/Scripts/jquery.validate.js"));
             //datePicker
             bundles.Add(new ScriptBundle("~/bundles/datepicker").Include("~/Scripts/bootstrap-datepicker.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/searchPage").Include("~/Scripts/ReservationScripts/search.js"));
 
             bundles.Add(new Bundle("~/bundles/searchPageStyle").Include(
-     "~/Content/reservation.css",
-     "~/Content/bootstrap.css",
-     "~/Content/datepicker.css"
-     ));
+                         "~/Content/reservation.css",
+                         "~/Content/bootstrap.css",
+                         "~/Content/datepicker.css"
+                         ));
             BundleTable.EnableOptimizations = true;
             // Order is very important for these files to work, they have explicit dependencies
             bundles.Add(new ScriptBundle("~/bundles/MsAjaxJs").Include(
