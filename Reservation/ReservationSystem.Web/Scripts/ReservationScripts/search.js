@@ -91,7 +91,7 @@ $(document).ready(function () {
                             };
                     });
                     if (cities == 'undefined' || cities == null) return false;
-                    if (cities[0].value == value) {
+                    if (cities[0].value.toLowerCase() == value.toLowerCase()) {
                         isSuccess = true;
                     }
                     $('#loading').hide();

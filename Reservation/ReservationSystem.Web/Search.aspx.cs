@@ -31,7 +31,7 @@ namespace ReservationSystem.Web
             {
                 BindDropDownList();  // Bind dropdown list values
 
-                // Display success message after successful reservation.
+                // Display success message after page refresh.
                 if (!string.IsNullOrEmpty(successMessage) && SuccessMessageLabl != null)
                 {
                     SuccessMessageLabl.Text = successMessage;
@@ -102,10 +102,8 @@ namespace ReservationSystem.Web
                 if (rvm.CheckOut != newDate)
                     Checkout.Text = rvm.CheckOut.ToString("MM/dd/yyyy");
                 SelectRoomDropdown.SelectedValue = rvm.Rooms.ToString();
-               
+
                 SelectRoomDropdown.Items.FindByValue(rvm.Rooms.ToString()).Selected = true;
-                //Adult.Items.FindByValue(rvm.ReservationDetailList.First().Adult.ToString()).Selected = true;
-                //Children.Items.FindByValue(rvm.ReservationDetailList.First().Children.ToString()).Selected = true;
                 Location.Text = rvm.Location;
             }
             catch { throw; }

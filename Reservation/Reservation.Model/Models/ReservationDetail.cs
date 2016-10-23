@@ -10,8 +10,5 @@ namespace ReservationSystem.Model.Models
         public int Children { get; set; }
         public DateTime? DateCreated { get; set; }
         public DateTime? DateUpdated { get; set; }
-
-     
-
     }
 }

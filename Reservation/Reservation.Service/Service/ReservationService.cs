@@ -6,26 +6,36 @@ namespace ReservationSystem.Service
 {
     public class ReservationService : IReservationService
     {
-        
+
         private readonly IReservationRepository _reservationRepository;
-     
+
 
         public ReservationService(IReservationRepository reservationRepository)
         {
-            this._reservationRepository = reservationRepository;
-        
+            try
+            {
+                _reservationRepository = reservationRepository;
+            }
+            catch { throw; }
         }
         public int CreateReservation(Reservation reservation)
         {
-            _reservationRepository.Add(reservation);
-            SaveReservation();
-            return reservation.Id;
-        
+            try
+            {
+                _reservationRepository.Add(reservation);
+                SaveReservation();
+                return reservation.Id;
+            }
+            catch { throw; }
         }
 
         public void SaveReservation()
         {
-            _reservationRepository.Commit();
+            try
+            {
+                _reservationRepository.Commit();
+            }
+            catch { throw; }
         }
     }
 }

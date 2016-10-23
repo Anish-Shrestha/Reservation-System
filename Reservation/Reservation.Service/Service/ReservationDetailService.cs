@@ -13,26 +13,42 @@ namespace ReservationSystem.Service
 
         public ReservationDetailService(IReservationDetailRepository reservationDetailRepository)
         {
-            this._reservationDetailRepository = reservationDetailRepository;
+            try
+            {
+                _reservationDetailRepository = reservationDetailRepository;
+            }
+            catch { throw; }
         }
 
         public void CreateReservationDetail(IEnumerable<ReservationDetail> rdml)
         {
-            foreach (var item in rdml.ToList())
+            try
             {
-                _reservationDetailRepository.Add(item);
+                foreach (var item in rdml.ToList())
+                {
+                    _reservationDetailRepository.Add(item);
+                }
+                _reservationDetailRepository.Commit();
             }
-            _reservationDetailRepository.Commit();
+            catch { throw; }
         }
 
         public void CreateReservationDetail(ReservationDetail reservationDetail)
         {
-            _reservationDetailRepository.Add(reservationDetail);
+            try
+            {
+                _reservationDetailRepository.Add(reservationDetail);
+            }
+            catch { throw; }
         }
 
         public void SaveReservationDetail()
         {
-            _reservationDetailRepository.Commit();
+            try
+            {
+                _reservationDetailRepository.Commit();
+            }
+            catch { throw; }
         }
     }
 }
